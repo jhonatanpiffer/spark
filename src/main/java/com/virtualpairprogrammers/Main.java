@@ -1,6 +1,5 @@
 package com.virtualpairprogrammers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,11 +18,17 @@ public class Main {
 		JavaSparkContext sc = new JavaSparkContext(conf);
 		
 		JavaRDD<String> initialRdd = sc.textFile("src/main/resources/subtitles/input.txt");
+		
+		JavaRDD<String> lettersOnly = initialRdd.map(sentence -> sentence.replaceAll("[^a-zA-Z\\s]", "").toLowerCase());
+		
+		JavaRDD<String> removedBlankLines = lettersOnly.filter(sentence -> sentence.trim().length() > 0 );
+		
+		JavaRDD<String> justWords = removedBlankLines.flatMap( words -> Arrays.asList(words.split(" ")).iterator() );
+		
+		JavaRDD<String> justInterestingWords =  justWords.filter(word -> Util.isNotBoring(word));
 				
-		initialRdd
-			.flatMap(value -> Arrays.asList(value.split(" ")).iterator())
-			.filter(word -> word.length() > 1  )
-			.foreach(value -> System.out.println(value));
+		List<String> results = justInterestingWords.take(50);
+		results.forEach(System.out::println);
 			
 		
 		sc.close();
