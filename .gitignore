@@ -1,0 +1,46 @@
+**.class
+# Ignore all compiled class files
+*.class
+
+# Ignore Java temporary files
+*.log
+*.tmp
+*.bak
+
+# Ignore IDE project files (Eclipse, IntelliJ IDEA, NetBeans, etc.)
+# Eclipse
+.project
+.classpath
+.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# NetBeans
+nbproject/
+
+# Build directories
+bin/
+build/
+out/
+target/
+
+# Maven
+.mvn/
+log/
+
+# Gradle
+.gradle/
+build/
+
+# Other files that should be ignored
+*.jar
+*.war
+*.ear
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+

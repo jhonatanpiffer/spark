@@ -20,25 +20,18 @@ public class Main {
 		inputData.add(20);
 		
 		Logger.getLogger("org.apache").setLevel(Level.WARN);
-		final Logger logger = Logger.getLogger(Main.class);
 		
 		SparkConf conf = new SparkConf().setMaster("local[*]").setAppName("StartingSpark");
 		
 		JavaSparkContext sc = new JavaSparkContext(conf);
 				
-		JavaRDD<Integer> myRDD = sc.parallelize(inputData);
+		JavaRDD<Integer> originalIntergers = sc.parallelize(inputData);
+		JavaRDD<IntegetWithSquareRoot> sqrtRdd = originalIntergers.map(value -> new IntegetWithSquareRoot(value));
 		
-		Integer result = myRDD.reduce( (value1, value2) -> value1 + value2);
+		sqrtRdd.foreach((IntegetWithSquareRoot n) -> System.out.printf("%d %f\n",n.getOrignalNumber(), n.getSqrt()));
 		
-		JavaRDD<Double> sqrtRdd = myRDD.map(value -> Math.sqrt(value));
-		
-		sqrtRdd.foreach(value -> System.out.println(value));
-		
-		System.out.println(result);
 		
 		sc.close();
-		
-
 	}
 
 }
