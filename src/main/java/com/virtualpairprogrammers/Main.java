@@ -31,7 +31,9 @@ public class Main {
 		
 		JavaRDD<String> words = sentences.flatMap(value -> Arrays.asList(value.split(" ")).iterator());
 		
-		words.foreach(value -> System.out.println(value));
+		JavaRDD<String> filteredWords = words.filter(word -> word.length() > 1 );
+		
+		filteredWords.foreach(value -> System.out.println(value));
 			
 		
 		sc.close();
