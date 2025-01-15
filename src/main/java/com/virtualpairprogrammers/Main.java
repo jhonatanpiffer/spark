@@ -27,13 +27,10 @@ public class Main {
 		
 		JavaSparkContext sc = new JavaSparkContext(conf);
 				
-		JavaRDD<String> sentences = sc.parallelize(inputData);
-		
-		JavaRDD<String> words = sentences.flatMap(value -> Arrays.asList(value.split(" ")).iterator());
-		
-		JavaRDD<String> filteredWords = words.filter(word -> word.length() > 1 );
-		
-		filteredWords.foreach(value -> System.out.println(value));
+		sc.parallelize(inputData)
+			.flatMap(value -> Arrays.asList(value.split(" ")).iterator())
+			.filter(word -> word.length() > 1  )
+			.foreach(value -> System.out.println(value));
 			
 		
 		sc.close();
